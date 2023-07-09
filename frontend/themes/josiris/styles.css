@@ -1,0 +1,40 @@
+@import url('./main-layout.css');
+
+vaadin-app-layout::part(drawer) {
+	width: 200px;
+	background: white;
+}
+
+vaadin-login-overlay-wrapper::part(brand) {
+	background-color: #f3f5f7;
+	color: #414c58;
+	min-height: 60px;
+}
+
+vaadin-login-overlay-wrapper::part(description) {
+	color: #414c58;
+}
+
+vaadin-tooltip-overlay::part(overlay) {
+	max-width: 520px;
+}
+
+vcf-nav-item::part(toggle-button) {
+	visibility: hidden;
+}
+
+vaadin-button:hover {
+	background-color: #e4f0ff;
+}
+
+vcf-nav-item::part(item):hover {
+	cursor: pointer;
+}
+
+.icon-list {
+	max-height: 150px;
+}
+
+.navigation-icon {
+	width: 16px;
+}
