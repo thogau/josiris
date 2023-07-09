@@ -1,4 +1,4 @@
-# Josiris
+# josiris
 
 Java [Osiris](https://github.com/siric-osiris/OSIRIS) pivot files importer.
 
