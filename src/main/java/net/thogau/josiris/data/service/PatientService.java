@@ -1,5 +1,7 @@
 package net.thogau.josiris.data.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -45,5 +47,13 @@ public class PatientService {
 
 	public Stream<Patient> paginate(PageRequest pr) {
 		return repository.findAll(pr).stream();
+	}
+
+	public Stream<Patient> findByOriginalId(String originalId, PageRequest pr) {
+		Optional<Patient> p = repository.findByOriginalId(originalId);
+		if (p.isPresent()) {
+			return Arrays.asList(p.get()).stream();
+		}
+		return new ArrayList<Patient>().stream();
 	}
 }

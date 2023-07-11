@@ -12,8 +12,10 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.QuerySortOrder;
 import com.vaadin.flow.data.provider.SortDirection;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
@@ -36,22 +38,24 @@ public class PatientListView extends VerticalLayout {
 	public PatientListView(PatientService service) {
 		this.service = service;
 		setSizeFull();
+
+		TextField filterTextField = new TextField("Filter on original ID");
+		filterTextField.setValueChangeMode(ValueChangeMode.LAZY);
+		filterTextField.addValueChangeListener(e -> findByOriginalId(e.getValue()));
+		add(filterTextField);
+
 		configureGrid();
 		add(grid);
-		grid.setItems(query -> {
-			var vaadinSortOrders = query.getSortOrders();
-			var springSortOrders = new ArrayList<Sort.Order>();
-			for (QuerySortOrder so : vaadinSortOrders) {
-				String colKey = so.getSorted();
-				if (so.getDirection() == SortDirection.ASCENDING) {
-					springSortOrders.add(Sort.Order.asc(colKey));
-				} else {
-					springSortOrders.add(Sort.Order.desc(colKey));
-				}
-			}
-			return service.paginate(PageRequest.of(query.getOffset(), query.getLimit(), Sort.by(springSortOrders)));
-		});
+
 		add(new Text("Total : " + service.count() + " Patients"));
+	}
+
+	private void findByOriginalId(String filterString) {
+		if (filterString != null && !filterString.isEmpty()) {
+			grid.setItems(q -> service.findByOriginalId(filterString, PageRequest.of(q.getPage(), q.getPageSize())));
+		} else {
+			configureGrid();
+		}
 	}
 
 	private void configureGrid() {
@@ -80,7 +84,23 @@ public class PatientListView extends VerticalLayout {
 		c.setFlexGrow(3);
 
 		grid.getColumns().forEach(col -> col.setAutoWidth(true));
+
 		grid.asSingleSelect().addValueChangeListener(event -> showPatient(event.getValue()));
+
+		grid.setItems(query -> {
+			var vaadinSortOrders = query.getSortOrders();
+			var springSortOrders = new ArrayList<Sort.Order>();
+			for (QuerySortOrder so : vaadinSortOrders) {
+				String colKey = so.getSorted();
+				if (so.getDirection() == SortDirection.ASCENDING) {
+					springSortOrders.add(Sort.Order.asc(colKey));
+				} else {
+					springSortOrders.add(Sort.Order.desc(colKey));
+				}
+			}
+			return service.paginate(PageRequest.of(query.getOffset(), query.getLimit(), Sort.by(springSortOrders)));
+		});
+
 	}
 
 	public void showPatient(Patient p) {
