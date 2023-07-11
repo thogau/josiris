@@ -1,5 +1,6 @@
 package net.thogau.josiris.views.patient;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -81,12 +82,35 @@ public class PatientView extends VerticalLayout implements HasUrlParameter<Strin
 	}
 
 	private TreeItem buildTree() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		root = TreeItem.builder().label("ROOT").value("ROOT").build();
 		TreeItem patientItem = TreeItem.builder().label("Patient").value(patient.getId().toString()).build();
 		root.getChildren().add(patientItem);
 		patientItem.getChildren().add(TreeItem.builder().label("Original ID").value(patient.getOriginalId()).build());
 		patientItem.getChildren().add(
 				TreeItem.builder().label("Gender").value(patient.getPatient_Gender().getLabelValueMeaning()).build());
+		patientItem.getChildren()
+				.add(TreeItem.builder().label("Birth date").value(sdf.format(patient.getPatient_BirthDate())).build());
+		patientItem.getChildren()
+				.add(TreeItem.builder().label("Death date")
+						.value(patient.getPatient_DeathDate() != null ? sdf.format(patient.getPatient_DeathDate()) : "")
+						.build());
+		patientItem.getChildren()
+				.add(TreeItem.builder().label("Cause of death")
+						.value(patient.getPatient_CauseOfDeath() != null
+								? patient.getPatient_CauseOfDeath().getLabelValueMeaning()
+								: "")
+						.build());
+		patientItem.getChildren()
+				.add(TreeItem.builder().label("Last news date").value(
+						patient.getPatient_LastNewsDate() != null ? sdf.format(patient.getPatient_LastNewsDate()) : "")
+						.build());
+		patientItem.getChildren()
+				.add(TreeItem.builder().label("Last news status")
+						.value(patient.getPatient_LastNewsStatus() != null
+								? patient.getPatient_LastNewsStatus().getLabelValueMeaning()
+								: "")
+						.build());
 		for (TumorPathologyEvent pte : patient.getTumorPathologyEvents()) {
 			TreeItem pteItem = TreeItem.builder().label("Tumour event").value(pte.getId().toString()).build();
 			patientItem.getChildren().add(pteItem);
