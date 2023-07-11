@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
@@ -40,6 +41,7 @@ import net.thogau.josiris.data.entity.Tnm;
 import net.thogau.josiris.data.entity.Treatment;
 import net.thogau.josiris.data.entity.TumorPathologyEvent;
 import net.thogau.josiris.data.service.PatientService;
+import net.thogau.josiris.views.patient.PatientListView;
 
 @Route(value = "", layout = MainLayout.class)
 @AnonymousAllowed
@@ -60,25 +62,29 @@ public class HomeView extends VerticalLayout {
 		this.service = service;
 		this.beanFactory = beanFactory;
 
-		upload.addAllFinishedListener(event -> {
-			LoggerFactory.getLogger(HomeView.class.getName()).warn("Processing pivot files...");
-			try {
-				populateDatabase();
-				LoggerFactory.getLogger(HomeView.class.getName()).warn("Processing pivot files done.");
-			} catch (Exception e) {
-				Notification.show("Import failed", 5000, Position.TOP_CENTER).addThemeName("error");
-			}
-		});
+		if (service.count() == 0) {
+			upload.addAllFinishedListener(event -> {
+				LoggerFactory.getLogger(HomeView.class.getName()).warn("Processing pivot files...");
+				try {
+					populateDatabase();
+					LoggerFactory.getLogger(HomeView.class.getName()).warn("Processing pivot files done.");
+				} catch (Exception e) {
+					Notification.show("Import failed", 5000, Position.TOP_CENTER).addThemeName("error");
+				}
+			});
 
-		upload.addStartedListener(event -> {
-			if (!Arrays.asList(supportedFiles).contains(event.getFileName())) {
-				Notification.show("File " + event.getFileName() + " in not supported", 5000, Position.TOP_CENTER);
-			}
-		});
+			upload.addStartedListener(event -> {
+				if (!Arrays.asList(supportedFiles).contains(event.getFileName())) {
+					Notification.show("File " + event.getFileName() + " in not supported", 5000, Position.TOP_CENTER);
+				}
+			});
 
-		upload.setAcceptedFileTypes("text/csv", ".csv");
-		upload.setUploadButton(new Button("Upload Osiris pivot files..."));
-		add(upload);
+			upload.setAcceptedFileTypes("text/csv", ".csv");
+			upload.setUploadButton(new Button("Upload Osiris pivot files..."));
+			add(upload);
+		} else {
+			UI.getCurrent().getPage().setLocation("patients");
+		}
 
 	}
 
@@ -285,6 +291,7 @@ public class HomeView extends VerticalLayout {
 				}
 			}
 			Notification.show(patientIds.values().size() + " patients were imported", 5000, Position.TOP_CENTER);
+			UI.getCurrent().navigate(PatientListView.class);
 
 		} catch (IllegalStateException e) {
 			Notification.show("Unexpected error : " + e.getMessage(), 5000, Position.TOP_CENTER).addThemeName("error");

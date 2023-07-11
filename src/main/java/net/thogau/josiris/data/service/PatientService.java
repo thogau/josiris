@@ -1,7 +1,10 @@
 package net.thogau.josiris.data.service;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import net.thogau.josiris.data.entity.Patient;
@@ -32,4 +35,16 @@ public class PatientService {
 		repository.deleteById(id);
 	}
 
+	public List<Patient> getAll() {
+		return repository.findAll();
+	}
+
+	public int count() {
+		return (int) repository.count();
+	}
+
+	public List<Patient> paginate(int from, int to) {
+		Page<Patient> page = repository.findAll(PageRequest.of(from, to));
+		return page.getContent();
+	}
 }
