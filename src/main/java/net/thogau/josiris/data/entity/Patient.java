@@ -106,9 +106,9 @@ public class Patient extends AbstractEntity {
 
 	@Override
 	public String toString() {
-		return "Patient [patient_Id=" + patient_Id + ", patient_Gender=" + patient_Gender + ", patient_Ethnicity="
-				+ patient_Ethnicity + ", patient_BirthDate=" + patient_BirthDate + ", patient_DeathDate="
-				+ patient_DeathDate + ", patient_ProviderCenterId=" + patient_ProviderCenterId
+		return "Patient [getId()=" + getId() + ", originalId=" + originalId + ", patient_Gender=" + patient_Gender
+				+ ", patient_Ethnicity=" + patient_Ethnicity + ", patient_BirthDate=" + patient_BirthDate
+				+ ", patient_DeathDate=" + patient_DeathDate + ", patient_ProviderCenterId=" + patient_ProviderCenterId
 				+ ", patient_OriginCenterId=" + patient_OriginCenterId + ", patient_CauseOfDeath="
 				+ patient_CauseOfDeath + ", patient_LastNewsDate=" + patient_LastNewsDate + ", patient_LastNewsStatus="
 				+ patient_LastNewsStatus + "]";
