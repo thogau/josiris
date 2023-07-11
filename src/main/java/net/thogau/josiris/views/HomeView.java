@@ -216,7 +216,7 @@ public class HomeView extends VerticalLayout {
 
 			// build patients
 			for (Patient patient : patients) {
-				patientIds.put(patient.getPatient_Id(), patient);
+				patientIds.put(patient.getOriginalId(), patient);
 			}
 
 			for (TumorPathologyEvent tpe : tpes) {
@@ -285,7 +285,7 @@ public class HomeView extends VerticalLayout {
 				try {
 					service.save(patient);
 				} catch (Exception e) {
-					Notification.show("Error importing patient " + patient.getPatient_Id() + " : " + e.getMessage(),
+					Notification.show("Error importing patient " + patient.getOriginalId() + " : " + e.getMessage(),
 							5000, Position.TOP_CENTER).addThemeName("error");
 					throw new RuntimeException();
 				}

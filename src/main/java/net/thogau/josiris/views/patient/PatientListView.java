@@ -1,13 +1,19 @@
 package net.thogau.josiris.views.patient;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.data.provider.QuerySortOrder;
+import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
@@ -32,14 +38,27 @@ public class PatientListView extends VerticalLayout {
 		setSizeFull();
 		configureGrid();
 		add(grid);
-		updateList();
+		grid.setItems(query -> {
+			var vaadinSortOrders = query.getSortOrders();
+			var springSortOrders = new ArrayList<Sort.Order>();
+			for (QuerySortOrder so : vaadinSortOrders) {
+				String colKey = so.getSorted();
+				if (so.getDirection() == SortDirection.ASCENDING) {
+					springSortOrders.add(Sort.Order.asc(colKey));
+				} else {
+					springSortOrders.add(Sort.Order.desc(colKey));
+				}
+			}
+			return service.paginate(PageRequest.of(query.getOffset(), query.getLimit(), Sort.by(springSortOrders)));
+		});
+		add(new Text("Total : " + service.count() + " Patients"));
 	}
 
 	private void configureGrid() {
 		grid.setSizeFull();
 		grid.removeAllColumns();
 
-		grid.addColumn("patient_Id").setHeader("Original ID");
+		grid.addColumn("originalId").setHeader("Original ID");
 
 		grid.addColumn("id").setHeader("Josiris ID");
 
@@ -49,28 +68,19 @@ public class PatientListView extends VerticalLayout {
 		grid.addColumn(p -> sdf.format(p.getPatient_BirthDate())).setHeader("Birth date");
 
 		c = grid.addColumn(p -> p.getTumorPathologyEvents().stream()
-				.map(TumorPathologyEvent::getTumorPathologyEvent_TopographyCode).collect(Collectors.toList()).stream()
-				.map(Topography::getLabelValueMeaning).collect(Collectors.joining(", ", "", "")))
-				.setHeader("Topography");
-		c.setFlexGrow(3);
-
-		c = grid.addColumn(p -> p.getTumorPathologyEvents().stream()
 				.map(TumorPathologyEvent::getTumorPathologyEvent_MorphologyCode).collect(Collectors.toList()).stream()
 				.map(Morphology::getLabelValueMeaning).collect(Collectors.joining(", ", "", "")))
 				.setHeader("Morphology");
 		c.setFlexGrow(3);
 
+		c = grid.addColumn(p -> p.getTumorPathologyEvents().stream()
+				.map(TumorPathologyEvent::getTumorPathologyEvent_TopographyCode).collect(Collectors.toList()).stream()
+				.map(Topography::getLabelValueMeaning).collect(Collectors.joining(", ", "", "")))
+				.setHeader("Topography");
+		c.setFlexGrow(3);
+
 		grid.getColumns().forEach(col -> col.setAutoWidth(true));
 		grid.asSingleSelect().addValueChangeListener(event -> showPatient(event.getValue()));
-	}
-
-	private void updateList() {
-		List<Patient> patients = service.paginate(0, 10);
-		for (Patient patient : patients) {
-			System.out.println(patient);
-		}
-		grid.setPageSize(10);
-		grid.setItems(patients);
 	}
 
 	public void showPatient(Patient p) {

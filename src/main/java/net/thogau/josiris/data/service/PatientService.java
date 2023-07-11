@@ -2,8 +2,8 @@ package net.thogau.josiris.data.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -43,8 +43,7 @@ public class PatientService {
 		return (int) repository.count();
 	}
 
-	public List<Patient> paginate(int from, int to) {
-		Page<Patient> page = repository.findAll(PageRequest.of(from, to));
-		return page.getContent();
+	public Stream<Patient> paginate(PageRequest pr) {
+		return repository.findAll(pr).stream();
 	}
 }

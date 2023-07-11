@@ -15,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -41,8 +42,15 @@ public class Patient extends AbstractEntity {
 
 	@Column(unique = true)
 	@NotEmpty
+	private String originalId;
+
+	@Transient
 	@CsvBindByName(column = "Patient_Id")
 	private String patient_Id;
+
+	public void setPatient_Id(String s) {
+		this.originalId = s;
+	}
 
 	@NotNull
 	@ManyToOne
