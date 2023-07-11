@@ -101,7 +101,7 @@ public class PatientListView extends VerticalLayout {
 			return service.paginate(PageRequest.of(query.getOffset(), query.getLimit(), Sort.by(springSortOrders)));
 		});
 
-		grid.setPageSize(15);
+		grid.setPageSize(10);
 
 	}
 
