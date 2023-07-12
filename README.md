@@ -9,9 +9,9 @@ Java [Osiris](https://github.com/siric-osiris/OSIRIS) pivot files importer.
 ## Target database
 - By default, patients are persisted in [HSQLDB](https://hsqldb.org/) in memory database.
 - To persist data in [MySQL](https://www.mysql.com/) or [PostgreSQL](https://www.postgresql.org/) :
-		- Install a MySQL/PostgreSQL server.
-		- Create a database called `josiris`.
-		- Comment/uncomment accordingly in `src/main/resources/application.properties`.
+	- Install a MySQL/PostgreSQL server.
+	- Create a database called `josiris`.
+	- Comment/uncomment accordingly in `src/main/resources/application.properties`.
 
 ## Running the Application Locally
 - Open command line.
