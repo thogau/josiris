@@ -33,43 +33,48 @@ import net.thogau.josiris.data.entity.conceptualDomain.T;
 public class Tnm extends AbstractEntity {
 
 	@OneToOne(mappedBy = "tnm")
-	private TumorPathologyEvent tumorPathologyEvent;
+	TumorPathologyEvent tumorPathologyEvent;
 
 	@Transient
 	@Builder.Default
 	@CsvBindByName(column = "TumorPathologyEvent_Ref")
-	private String tumorPathologyEvent_Ref = "UMLS:C0439673";
+	String tumorPathologyEvent_Ref = "UMLS:C0439673";
 
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "t_id")
 	@CsvBindByName(column = "TNM_T")
 	@CsvCustomBindByName(converter = TConverter.class)
-	private T tnm_T;
+	@Displayable(label = "T")
+	T tnm_T;
 
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "n_id")
 	@CsvBindByName(column = "TNM_N")
 	@CsvCustomBindByName(converter = NConverter.class)
-	private N tnm_N;
+	@Displayable(label = "N")
+	N tnm_N;
 
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "m_id")
 	@CsvBindByName(column = "TNM_M")
 	@CsvCustomBindByName(converter = MConverter.class)
-	private M tnm_M;
+	@Displayable(label = "M")
+	M tnm_M;
 
 	@NotEmpty
 	@Builder.Default
 	@CsvBindByName(column = "TNM_TNMVersion")
-	private String tnm_TNMVersion = "UMLS:C0439673";
+	@Displayable(label = "TNM version")
+	String tnm_TNMVersion = "UMLS:C0439673";
 
 	@NotEmpty
 	@Builder.Default
 	@CsvBindByName(column = "TNM_G8")
-	private String tnm_G8 = "UMLS:C0439673";
+	@Displayable(label = "TNM G8")
+	String tnm_G8 = "UMLS:C0439673";
 
 	@Override
 	public String toString() {

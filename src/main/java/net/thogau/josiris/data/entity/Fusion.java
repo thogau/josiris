@@ -36,52 +36,55 @@ public class Fusion extends AbstractEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "analysis_id")
-	private Analysis analysis;
+	Analysis analysis;
 
 	@Transient
 	@CsvBindByName(column = "Instance_Id")
-	private String instance_Id;
+	String instance_Id;
 
 	@Transient
 	@Builder.Default
 	@CsvBindByName(column = "Analysis_Ref")
-	private String analysis_Ref = "UMLS:C0439673";
+	String analysis_Ref = "UMLS:C0439673";
 
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "alterationType_id")
 	@CsvBindByName(column = "AlterationOnSample_AlterationType")
 	@CsvCustomBindByName(converter = AlterationTypeConverter.class)
-	private AlterationType alterationOnSample_AlterationType;
+	@Displayable(label = "Alteration type")
+	AlterationType alterationOnSample_AlterationType;
 
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "chromosome5prime_id")
 	@CsvBindByName(column = "Fusion_Chromosome5prime")
 	@CsvCustomBindByName(converter = ChromosomeConverter.class)
-	private Chromosome fusion_Chromosome5prime;
+	@Displayable(label = "Chromosome 5'")
+	Chromosome fusion_Chromosome5prime;
 
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "chromosome3prime_id")
 	@CsvBindByName(column = "Fusion_Chromosome3prime")
 	@CsvCustomBindByName(converter = ChromosomeConverter.class)
-	private Chromosome fusion_Chromosome3prime;
+	@Displayable(label = "Chromosome 3'")
+	Chromosome fusion_Chromosome3prime;
 
-	private String alterationOnSample_Pathogenicity;
-	private String alterationOnSample_Actionability;
-	private String alterationOnSample_ProposedForOrientation;
-	private String fusion_Type;
-	private String fusion_Point5prime;
-	private String fusion_Point3prime;
-	private String fusion_NbSpanningPair;
-	private String fusion_NbSplitReads;
-	private String fusion_InFrame;
-	private String validation_Type;
-	private String validation_Method;
-	private String validation_Status;
+	String alterationOnSample_Pathogenicity;
+	String alterationOnSample_Actionability;
+	String alterationOnSample_ProposedForOrientation;
+	String fusion_Type;
+	String fusion_Point5prime;
+	String fusion_Point3prime;
+	String fusion_NbSpanningPair;
+	String fusion_NbSplitReads;
+	String fusion_InFrame;
+	String validation_Type;
+	String validation_Method;
+	String validation_Status;
 
 	@OneToMany(mappedBy = "fusion", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Builder.Default
-	private List<Annotation> annotations = new ArrayList<>();
+	List<Annotation> annotations = new ArrayList<>();
 }

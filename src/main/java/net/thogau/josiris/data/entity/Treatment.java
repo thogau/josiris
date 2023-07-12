@@ -8,6 +8,7 @@ import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvCustomBindByName;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -40,64 +41,73 @@ public class Treatment extends AbstractEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "tumorPathologyEvent_id")
-	private TumorPathologyEvent tumorPathologyEvent;
+	TumorPathologyEvent tumorPathologyEvent;
 
 	@Transient
 	@CsvBindByName(column = "Instance_Id")
-	private String instance_Id;
+	String instance_Id;
 
 	@Transient
 	@Builder.Default
 	@CsvBindByName(column = "TumorPathologyEvent_Ref")
-	private String tumorPathologyEvent_Ref = "UMLS:C0439673";
+	String tumorPathologyEvent_Ref = "UMLS:C0439673";
 
 	@NotEmpty
 	@Builder.Default
 	@CsvBindByName(column = "Treatment_LineNumber")
-	private String treatment_LineNumber = "UMLS:C0439673";
+	@Displayable(label = "Line number")
+	String treatment_LineNumber = "UMLS:C0439673";
 
 	@NotEmpty
 	@Builder.Default
 	@CsvBindByName(column = "Treatment_ActivityCode")
-	private String treatment_ActivityCode = "UMLS:C0439673";
+	@Displayable(label = "Activity code")
+	String treatment_ActivityCode = "UMLS:C0439673";
 
 	@CsvBindByName(column = "Treatment_StartDate")
 	@CsvCustomBindByName(converter = DateConverter.class)
-	private Date treatment_StartDate;
+	@Displayable(label = "Start date")
+	Date treatment_StartDate;
 
 	@CsvBindByName(column = "Treatment_EndDate")
 	@CsvCustomBindByName(converter = DateConverter.class)
-	private Date treatment_EndDate;
+	@Displayable(label = "End date")
+	Date treatment_EndDate;
 
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "clinicalTrialContext_id")
 	@CsvBindByName(column = "Treatment_ClinicalTrialContext")
 	@CsvCustomBindByName(converter = BooleanConverter.class)
-	private Boolean treatment_ClinicalTrialContext;
+	@Displayable(label = "Clinical trial")
+	Boolean treatment_ClinicalTrialContext;
 
 	@CsvBindByName(column = "Treatment_ClinicalTrialName")
-	private String treatment_ClinicalTrialName;
+	@Displayable(label = "Clinical trial name")
+	String treatment_ClinicalTrialName;
 
 	@CsvBindByName(column = "Treatment_ClinicalTrialId")
-	private String treatment_ClinicalTrialId;
+	@Displayable(label = "Clinical trial ID")
+	String treatment_ClinicalTrialId;
 
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "surgeryResectionQuality_id")
 	@CsvBindByName(column = "Treatment_SurgeryResectionQuality")
 	@CsvCustomBindByName(converter = SurgeryResectionQualityConverter.class)
-	private SurgeryResectionQuality treatment_SurgeryResectionQuality;
+	@Displayable(label = "Surgery resection quality")
+	SurgeryResectionQuality treatment_SurgeryResectionQuality;
 
 	@NotEmpty
 	@Builder.Default
 	@CsvBindByName(column = "Treatment_SurgeryNature")
-	private String treatment_SurgeryNature = "UMLS:C0439673";
+	@Displayable(label = "Surgery nature")
+	String treatment_SurgeryNature = "UMLS:C0439673";
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "treatment_drug", joinColumns = @JoinColumn(name = "treatment_id"), inverseJoinColumns = @JoinColumn(name = "drug_id"), uniqueConstraints = {
 			@UniqueConstraint(name = "duplicate_drug_for_treatment", columnNames = { "treatment_id", "drug_id" }) })
 	@Builder.Default
-	private Set<Drug> drugs = new HashSet<>();
+	Set<Drug> drugs = new HashSet<>();
 
 }

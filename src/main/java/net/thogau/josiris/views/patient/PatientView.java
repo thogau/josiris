@@ -1,6 +1,5 @@
 package net.thogau.josiris.views.patient;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -18,7 +17,6 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 import net.thogau.josiris.data.entity.Patient;
-import net.thogau.josiris.data.entity.TumorPathologyEvent;
 import net.thogau.josiris.data.service.PatientService;
 import net.thogau.josiris.views.MainLayout;
 
@@ -39,14 +37,14 @@ public class PatientView extends VerticalLayout implements HasUrlParameter<Strin
 	@Override
 	public void setParameter(BeforeEvent event, @OptionalParameter String id) {
 		patient = service.get(Long.parseLong(id));
-		buildTree();
+		root = patient.buildTree();
 
 		setHeightFull();
 
 		var treeGrid = new TreeGrid<TreeItem>();
 		treeGrid.setItems(Arrays.asList(root), this::getChildren);
 		treeGrid.addHierarchyColumn(item -> item.getLabel());
-		treeGrid.addColumn(TreeItem::getValue).setWidth("80%");
+		treeGrid.addColumn(TreeItem::getValue);
 
 		var dataProvider = new AbstractBackEndHierarchicalDataProvider<TreeItem, Void>() {
 
@@ -79,47 +77,6 @@ public class PatientView extends VerticalLayout implements HasUrlParameter<Strin
 		treeGrid.setHeightFull();
 
 		add(treeGrid);
-	}
-
-	private TreeItem buildTree() {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		root = TreeItem.builder().label("ROOT").value("ROOT").build();
-		TreeItem patientItem = TreeItem.builder().label("Patient").value(patient.getId().toString()).build();
-		root.getChildren().add(patientItem);
-		patientItem.getChildren().add(TreeItem.builder().label("Original ID").value(patient.getOriginalId()).build());
-		patientItem.getChildren().add(
-				TreeItem.builder().label("Gender").value(patient.getPatient_Gender().getLabelValueMeaning()).build());
-		patientItem.getChildren()
-				.add(TreeItem.builder().label("Birth date").value(sdf.format(patient.getPatient_BirthDate())).build());
-		patientItem.getChildren()
-				.add(TreeItem.builder().label("Death date")
-						.value(patient.getPatient_DeathDate() != null ? sdf.format(patient.getPatient_DeathDate()) : "")
-						.build());
-		patientItem.getChildren()
-				.add(TreeItem.builder().label("Cause of death")
-						.value(patient.getPatient_CauseOfDeath() != null
-								? patient.getPatient_CauseOfDeath().getLabelValueMeaning()
-								: "")
-						.build());
-		patientItem.getChildren()
-				.add(TreeItem.builder().label("Last news date").value(
-						patient.getPatient_LastNewsDate() != null ? sdf.format(patient.getPatient_LastNewsDate()) : "")
-						.build());
-		patientItem.getChildren()
-				.add(TreeItem.builder().label("Last news status")
-						.value(patient.getPatient_LastNewsStatus() != null
-								? patient.getPatient_LastNewsStatus().getLabelValueMeaning()
-								: "")
-						.build());
-		for (TumorPathologyEvent pte : patient.getTumorPathologyEvents()) {
-			TreeItem pteItem = TreeItem.builder().label("Tumour event").value(pte.getId().toString()).build();
-			patientItem.getChildren().add(pteItem);
-			pteItem.getChildren().add(TreeItem.builder().label("Type")
-					.value(pte.getTumorPathologyEvent_Type().getLabelValueMeaning()).build());
-			pteItem.getChildren().add(TreeItem.builder().label("Topography")
-					.value(pte.getTumorPathologyEvent_TopographyCode().getLabelValueMeaning()).build());
-		}
-		return root;
 	}
 
 	private List<TreeItem> getChildren(TreeItem item) {

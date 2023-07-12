@@ -38,50 +38,54 @@ public class Analysis extends AbstractEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "biologicalSample_id")
-	private BiologicalSample biologicalSample;
+	BiologicalSample biologicalSample;
 
 	@Transient
 	@CsvBindByName(column = "Instance_Id")
-	private String instance_Id;
+	String instance_Id;
 
 	@Transient
 	@Builder.Default
 	@CsvBindByName(column = "BiologicalSample_Ref")
-	private String BiologicalSample_Ref = "UMLS:C0439673";
+	String BiologicalSample_Ref = "UMLS:C0439673";
 
 	@Builder.Default
 	@CsvBindByName(column = "Analysis_Code")
-	private String analysis_Code = "UMLS:C0439673";
+	@Displayable(label = "Code")
+	String analysis_Code = "UMLS:C0439673";
 
 	@CsvBindByName(column = "Analysis_Date")
 	@CsvCustomBindByName(converter = DateConverter.class)
-	private Date analysis_Date;
+	@Displayable(label = "Date")
+	Date analysis_Date;
 
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "analysisType_id")
 	@CsvBindByName(column = "analysis_Type")
 	@CsvCustomBindByName(converter = AnalysisTypeConverter.class)
-	private AnalysisType analysis_Type;
+	@Displayable(label = "Type")
+	AnalysisType analysis_Type;
 
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "technicalProtocol_id")
 	@CsvBindByName(column = "Technology_TechnicalProtocol")
 	@CsvCustomBindByName(converter = TechnicalProtocolConverter.class)
-	private TechnicalProtocol Technology_TechnicalProtocol;
+	@Displayable(label = "Technical protocol")
+	TechnicalProtocol Technology_TechnicalProtocol;
 
-	private String technology_PlatformName;
-	private String technology_PlatformAccession;
-	private String technology_DateOfExperiment;
-	private String panel_Name;
-	private String analysisProcess_AnalyticPipelineCode;
-	private String omicAnalysis_AlgorithmicCellularity;
-	private String omicAnalysis_AlgorithmicPloidy;
-	private String omicAnalysis_NumberOfBreakPoints;
+	String technology_PlatformName;
+	String technology_PlatformAccession;
+	String technology_DateOfExperiment;
+	String panel_Name;
+	String analysisProcess_AnalyticPipelineCode;
+	String omicAnalysis_AlgorithmicCellularity;
+	String omicAnalysis_AlgorithmicPloidy;
+	String omicAnalysis_NumberOfBreakPoints;
 
 	@OneToMany(mappedBy = "analysis", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Builder.Default
-	private List<Fusion> fusions = new ArrayList<>();
+	List<Fusion> fusions = new ArrayList<>();
 
 }

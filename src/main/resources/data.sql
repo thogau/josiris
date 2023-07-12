@@ -1,7 +1,7 @@
 /* users */
-insert into application_user (version, id, username,firstname,lastname,email,enabled,account_non_expired,credentials_non_expired,account_non_locked,password, email_verified,email_verification_code) values (1, '1','user','John','Doe','mail@example.com',true,true,true,true,'$2a$10$xdbKoM48VySZqVSU/cSlVeJn0Z04XCZ7KZBjUBC00eKo5uLswyOpe',true,'xqG4jPVjKIHFQk5ZHcytWRx6n52WzS51')
+insert into application_user (version, id, username,firstname,lastname,email,enabled,account_non_expired,credentials_non_expired,account_non_locked,password, email_verified,email_verification_code) values (1, '1','user','John','Doe','mail@example.com',true,true,true,true,'$2a$10$a3CTiH5uesfyw8y.mcpYHurM6c0KxTd3.zjH3wvoAjbB8QXO2J4Qy',true,'xqG4jPVjKIHFQk5ZHcytWRx6n52WzS51')
 insert into user_roles (user_id, roles) values ('1', 'USER')
-insert into application_user (version, id, username,firstname,lastname,email,enabled,account_non_expired,credentials_non_expired,account_non_locked,password, email_verified,email_verification_code) values (1, '2','admin','Jo','Siris','thogau@thogau.net',true,true,true,true,'$2a$10$wWwZLVB1xnJLqIVuqnH6BOTIYWxZm3kASMmTWI9LqTZr90I2iyamy',true,'xqG4jPVjKIHFQk5ZHcytWRx6n52WzS51')
+insert into application_user (version, id, username,firstname,lastname,email,enabled,account_non_expired,credentials_non_expired,account_non_locked,password, email_verified,email_verification_code) values (1, '2','admin','Jo','Siris','thogau@thogau.net',true,true,true,true,'$2a$10$iHLtP0HxpG58kj97h51vPuLhLa3GBJT/jy/dTvpmL9YH9R6sXDof.',true,'xqG4jPVjKIHFQk5ZHcytWRx6n52WzS51')
 insert into user_roles (user_id, roles) values ('2', 'USER')
 insert into user_roles (user_id, roles) values ('2', 'ADMIN')
 
