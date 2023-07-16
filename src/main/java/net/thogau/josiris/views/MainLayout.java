@@ -3,16 +3,12 @@ package net.thogau.josiris.views;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.vaadin.lineawesome.LineAwesomeIcon;
-
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Footer;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Header;
 import com.vaadin.flow.component.html.Span;
@@ -104,7 +100,7 @@ public class MainLayout extends AppLayout {
 	}
 
 	private void addDrawerContent() {
-		addToDrawer(createHeader(), new Scroller(createNavigation()), createFooter());
+		addToDrawer(createHeader(), new Scroller(createNavigation()));
 	}
 
 	private Header createHeader() {
@@ -117,16 +113,6 @@ public class MainLayout extends AppLayout {
 		navigation.addItem(new AppNavItem("Import", ImportView.class));
 		navigation.addItem(new AppNavItem("Browse", PatientListView.class));
 		return navigation;
-	}
-
-	private Footer createFooter() {
-		Footer layout = new Footer();
-		Span icon = (Span) LineAwesomeIcon.COPYRIGHT.create();
-		icon.getStyle().set("position", "relative");
-		icon.getStyle().set("top", "2px");
-		icon.getStyle().set("left", "3px");
-		layout.add(icon, new Text("2023 thogau.net"));
-		return layout;
 	}
 
 	@Override
