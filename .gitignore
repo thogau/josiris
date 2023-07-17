@@ -8,3 +8,6 @@
 /vite.generated.ts
 /josiris.log
 /yaks.txt
+/.settings/
+/.classpath
+/.project
