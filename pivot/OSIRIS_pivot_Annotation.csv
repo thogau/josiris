@@ -1,0 +1,13 @@
+Patient_Id,Instance_Id,Alteration_Ref,AlterationOnSample_AlterationType,GenomeEntity_Type,GenomeEntity_Database,GenomeEntity_Id,GenomeEntity_Symbol,Annotation_ReferenceType,Annotation_ReferenceDatabase,Annotation_ReferenceValue,Annotation_MutationPredictionAlgorithm,Annotation_MutationPredictionValue,Annotation_MutationPredictionScore,Annotation_PfamDomain,Annotation_PfamId,Annotation_DNARegionName,Annotation_DNASequenceVariation,Annotation_AminoAcidChange,Annotation_GenomicSequenceVariation,Annotation_RNASequenceVariation,Annotation_AminoAcidChangeType,Annotation_FusionPrimeEnd,Annotation_Strand
+33,502,452,,UMLS:C0017337,OSIRIS:O25-1,6760,SSI8,,,,,,,,,,,,,,,OSIRIS:O93-1,
+33,503,452,,UMLS:C0017337,OSIRIS:O25-1,6757,,,,,,,,,,,,,,,,OSIRIS:O93-2,
+43,504,453,,UMLS:C0017337,OSIRIS:O25-1,5077,PAX3,,,,,,,,,,,,,,,OSIRIS:O93-1,
+43,505,453,,UMLS:C0017337,OSIRIS:O25-1,2308,FOXOA1,,,,,,,,,,,,,,,OSIRIS:O93-2,
+59,506,454,,UMLS:C0017337,OSIRIS:O25-1,2521,FUS,,,,,,,,,,,,,,,OSIRIS:O93-1,
+59,507,454,,UMLS:C0017337,OSIRIS:O25-1,1649,DDIT3,,,,,,,,,,,,,,,OSIRIS:O93-2,
+72,508,455,,UMLS:C0017337,OSIRIS:O25-1,2130,EWSR1,,,,,,,,,,,,,,,OSIRIS:O93-1,
+72,509,455,,UMLS:C0017337,OSIRIS:O25-1,1649,DDIT3,,,,,,,,,,,,,,,OSIRIS:O93-2,
+76,510,456,,UMLS:C0017337,OSIRIS:O25-1,2521,FUS,,,,,,,,,,,,,,,OSIRIS:O93-1,
+76,511,456,,UMLS:C0017337,OSIRIS:O25-1,1649,DDIT3,,,,,,,,,,,,,,,OSIRIS:O93-2,
+90,512,457,,UMLS:C0017337,OSIRIS:O25-1,6760,SSI8,,,,,,,,,,,,,,,OSIRIS:O93-1,
+90,513,457,,UMLS:C0017337,OSIRIS:O25-1,6756,,,,,,,,,,,,,,,,OSIRIS:O93-2,

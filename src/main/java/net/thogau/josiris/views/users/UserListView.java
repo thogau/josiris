@@ -17,10 +17,10 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 import jakarta.annotation.security.RolesAllowed;
-import net.thogau.josiris.data.Role;
 import net.thogau.josiris.data.entity.User;
 import net.thogau.josiris.data.service.UserService;
 import net.thogau.josiris.data.service.UserService.EmailAlreadyUsedException;
+import net.thogau.josiris.security.Role;
 import net.thogau.josiris.views.MainLayout;
 import net.thogau.josiris.views.utils.ExternalToolbarView;
 

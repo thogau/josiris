@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import net.thogau.josiris.data.entity.Patient;
@@ -17,7 +18,7 @@ public class PatientService {
 
 	private final PatientRepository repository;
 
-	public PatientService(PatientRepository repository) {
+	public PatientService(PatientRepository repository, ConceptualDomainService cdService) {
 		this.repository = repository;
 	}
 
@@ -38,7 +39,7 @@ public class PatientService {
 	}
 
 	public List<Patient> getAll() {
-		return repository.findAll();
+		return repository.findAll(Sort.by(Sort.Direction.ASC, "originalId"));
 	}
 
 	public int count() {

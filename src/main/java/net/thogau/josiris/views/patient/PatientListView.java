@@ -1,11 +1,9 @@
 package net.thogau.josiris.views.patient;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
@@ -13,8 +11,6 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.provider.QuerySortOrder;
-import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -62,9 +58,9 @@ public class PatientListView extends VerticalLayout {
 		grid.setSizeFull();
 		grid.removeAllColumns();
 
-		grid.addColumn("originalId").setHeader("Original ID");
+		grid.addColumn("originalId").setHeader("Original ID").setSortable(false);
 
-		grid.addColumn("id").setHeader("Josiris ID");
+		grid.addColumn("id").setHeader("Josiris ID").setSortable(false);
 
 		Column<Patient> c = grid.addColumn(p -> p.getPatient_Gender().getLabelValueMeaning()).setHeader("Gender");
 
@@ -87,21 +83,23 @@ public class PatientListView extends VerticalLayout {
 
 		grid.asSingleSelect().addValueChangeListener(event -> showPatient(event.getValue()));
 
-		grid.setItems(query -> {
-			var vaadinSortOrders = query.getSortOrders();
-			var springSortOrders = new ArrayList<Sort.Order>();
-			for (QuerySortOrder so : vaadinSortOrders) {
-				String colKey = so.getSorted();
-				if (so.getDirection() == SortDirection.ASCENDING) {
-					springSortOrders.add(Sort.Order.asc(colKey));
-				} else {
-					springSortOrders.add(Sort.Order.desc(colKey));
-				}
-			}
-			return service.paginate(PageRequest.of(query.getOffset(), query.getLimit(), Sort.by(springSortOrders)));
-		});
+//		grid.setItems(query -> {
+//			var vaadinSortOrders = query.getSortOrders();
+//			var springSortOrders = new ArrayList<Sort.Order>();
+//			for (QuerySortOrder so : vaadinSortOrders) {
+//				String colKey = so.getSorted();
+//				if (so.getDirection() == SortDirection.ASCENDING) {
+//					springSortOrders.add(Sort.Order.asc(colKey));
+//				} else {
+//					springSortOrders.add(Sort.Order.desc(colKey));
+//				}
+//			}
+//			return service.paginate(PageRequest.of(query.getOffset(), query.getLimit(), Sort.by(springSortOrders)));
+//		});
+//
+//		grid.setPageSize(10);
 
-		grid.setPageSize(10);
+		grid.setItems(service.getAll());
 
 	}
 

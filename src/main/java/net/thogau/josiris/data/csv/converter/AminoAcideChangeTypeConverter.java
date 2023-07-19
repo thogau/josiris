@@ -7,6 +7,7 @@ import com.opencsv.bean.AbstractBeanField;
 import com.opencsv.exceptions.CsvConstraintViolationException;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 
+import net.thogau.josiris.data.entity.conceptualDomain.AminoAcidChangeType;
 import net.thogau.josiris.data.service.ConceptualDomainService;
 
 @Component
@@ -17,8 +18,8 @@ public class AminoAcideChangeTypeConverter<T, I> extends AbstractBeanField<T, I>
 
 	@Override
 	protected Object convert(String value) throws CsvDataTypeMismatchException, CsvConstraintViolationException {
-		Object o = service.getAminoAcidChangeType(value);
-		return o != null ? o : service.getAminoAcidChangeType("UMLS:C0439673");
+		Object o = service.getValue(AminoAcidChangeType.class, value);
+		return o != null ? o : service.getValue(AminoAcidChangeType.class, "UMLS:C0439673");
 	}
 
 }

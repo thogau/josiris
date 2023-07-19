@@ -29,6 +29,7 @@ import net.thogau.josiris.data.service.PatientService;
 import net.thogau.josiris.security.AuthenticatedUser;
 import net.thogau.josiris.views.components.appnav.AppNav;
 import net.thogau.josiris.views.components.appnav.AppNavItem;
+import net.thogau.josiris.views.patient.ExportView;
 import net.thogau.josiris.views.patient.ImportView;
 import net.thogau.josiris.views.patient.PatientListView;
 import net.thogau.josiris.views.users.UserProfileView;
@@ -112,6 +113,7 @@ public class MainLayout extends AppLayout {
 		navigation.setCollapsible(false);
 		navigation.addItem(new AppNavItem("Import", ImportView.class));
 		navigation.addItem(new AppNavItem("Browse", PatientListView.class));
+		navigation.addItem(new AppNavItem("Export", ExportView.class));
 		return navigation;
 	}
 

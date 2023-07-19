@@ -7,6 +7,7 @@ import com.opencsv.bean.AbstractBeanField;
 import com.opencsv.exceptions.CsvConstraintViolationException;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 
+import net.thogau.josiris.data.entity.conceptualDomain.SurgeryResectionQuality;
 import net.thogau.josiris.data.service.ConceptualDomainService;
 
 @Component
@@ -17,7 +18,7 @@ public class SurgeryResectionQualityConverter<T, I> extends AbstractBeanField<T,
 
 	@Override
 	protected Object convert(String value) throws CsvDataTypeMismatchException, CsvConstraintViolationException {
-		return service.getSurgeryResectionQuality(value);
+		return service.getValue(SurgeryResectionQuality.class, value);
 	}
 
 }

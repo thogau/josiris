@@ -17,9 +17,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.vaadin.flow.router.RouteConfiguration;
 
-import net.thogau.josiris.data.Role;
 import net.thogau.josiris.data.entity.User;
 import net.thogau.josiris.data.repository.UserRepository;
+import net.thogau.josiris.security.Role;
 import net.thogau.josiris.views.users.EmailVerificationView;
 import net.thogau.josiris.views.users.ResetPasswordView;
 

@@ -1,0 +1,7 @@
+Patient_Id,Instance_Id,TumorPathologyEvent_Ref,BiologicalSample_Ref,Analysis_Code,Analysis_Type,Analysis_Date,Technology_TechnicalProtocol,Technology_PlatformName,Technology_PlatformAccession,Technology_DateOfExperiment,Panel_Name,AnalysisProcess_AnalyticPipelineCode,OmicAnalysis_AlgorithmicCellularity,OmicAnalysis_AlgorithmicPloidy,OmicAnalysis_NumberOfBreakPoints
+33,402,306,280,,OSIRIS:C37-1,,UMLS:C0599161,,,,,,,,
+43,403,326,564,,OSIRIS:C37-1,,UMLS:C0599161,,,,,,,,
+59,404,708,600,,OSIRIS:C37-1,,UMLS:C0599161,,,,,,,,
+72,405,724,775,,OSIRIS:C37-1,,UMLS:C0599161,,,,,,,,
+76,406,729,781,,OSIRIS:C37-1,,UMLS:C0599161,,,,,,,,
+90,407,747,866,,OSIRIS:C37-1,,UMLS:C0599161,,,,,,,,

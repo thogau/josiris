@@ -17,7 +17,7 @@ public class BooleanConverter<T, I> extends AbstractBeanField<T, I> {
 
 	@Override
 	protected Object convert(String value) throws CsvDataTypeMismatchException, CsvConstraintViolationException {
-		return service.getBoolean(value);
+		return service.getValue(net.thogau.josiris.data.entity.conceptualDomain.Boolean.class, value);
 	}
 
 }

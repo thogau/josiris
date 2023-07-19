@@ -18,10 +18,11 @@ public class TConverter<T, I> extends AbstractBeanField<T, I> {
 	@Override
 	protected Object convert(String value) throws CsvDataTypeMismatchException, CsvConstraintViolationException {
 		if (value.startsWith("T2")) {
-			return service.getT("T2");
+			return service.getValue(net.thogau.josiris.data.entity.conceptualDomain.T.class, "T2");
 		} else {
-			Object o = service.getT(value);
-			return o != null ? o : service.getT("UMLS:C0439673");
+			Object o = service.getValue(net.thogau.josiris.data.entity.conceptualDomain.T.class, value);
+			return o != null ? o
+					: service.getValue(net.thogau.josiris.data.entity.conceptualDomain.T.class, "UMLS:C0439673");
 		}
 	}
 

@@ -7,6 +7,7 @@ import com.opencsv.bean.AbstractBeanField;
 import com.opencsv.exceptions.CsvConstraintViolationException;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 
+import net.thogau.josiris.data.entity.conceptualDomain.Drug;
 import net.thogau.josiris.data.service.ConceptualDomainService;
 
 @Component
@@ -17,8 +18,8 @@ public class DrugConverter<T, I> extends AbstractBeanField<T, I> {
 
 	@Override
 	protected Object convert(String value) throws CsvDataTypeMismatchException, CsvConstraintViolationException {
-		Object o = service.getDrug("ATC:" + value);
-		return o != null ? o : service.getDrug("UMLS:C0439673");
+		Object o = service.getValue(Drug.class, "ATC:" + value);
+		return o != null ? o : service.getValue(Drug.class, "UMLS:C0439673");
 	}
 
 }

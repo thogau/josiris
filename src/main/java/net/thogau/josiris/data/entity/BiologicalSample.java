@@ -1,5 +1,6 @@
 package net.thogau.josiris.data.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +39,39 @@ import net.thogau.josiris.data.entity.conceptualDomain.StorageTemperature;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BiologicalSample extends AbstractEntity {
+
+	public static final String CSV_HEADER = "Patient_Id,Instance_Id,TumorPathologyEvent_Ref,Consent_Ref,BiologicalSample_ExternalAccession,BiologicalSample_ParentExternalAccession,BiologicalSample_CollectDate,BiologicalSample_TopographyCode,BiologicalSample_Nature,BiologicalSample_Origin,BiologicalSample_StorageTemperature,BiologicalSample_TumorCellularity";
+
+	public String getCsvData() {
+		StringBuffer sb = new StringBuffer();
+		try {
+			sb.append((getTumorPathologyEvent().getPatient().getId() != null
+					? getTumorPathologyEvent().getPatient().getId()
+					: "") + ",");
+		} catch (Exception e) {
+			sb.append((getTumorPathologyEvent().getParent().getPatient().getId() != null
+					? getTumorPathologyEvent().getParent().getPatient().getId()
+					: "") + ",");
+		}
+		sb.append(getId() + ",");
+		sb.append(getTumorPathologyEvent().getId() + ",");
+		sb.append(consent_Ref + ",");
+		sb.append(biologicalSample_ExternalAccession + ",");
+		sb.append(biologicalSample_ParentExternalAccession + ",");
+		sb.append((biologicalSample_CollectDate != null
+				? new SimpleDateFormat("yyyy-MM-dd").format(biologicalSample_CollectDate)
+				: "") + ",");
+		sb.append((getTumorPathologyEvent().getTumorPathologyEvent_TopographyCode() != null
+				? getTumorPathologyEvent().getTumorPathologyEvent_TopographyCode().getValueMeaning()
+				: "") + ",");
+		sb.append((biologicalSample_Nature != null ? biologicalSample_Nature.getValueMeaning() : "") + ",");
+		sb.append((biologicalSample_Origin != null ? biologicalSample_Origin.getValueMeaning() : "") + ",");
+		sb.append((BiologicalSample_StorageTemperature != null ? BiologicalSample_StorageTemperature.getValueMeaning()
+				: "") + ",");
+		sb.append(BiologicalSample_TumorCellularity);
+
+		return sb.toString();
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "tumorPathologyEvent_id")

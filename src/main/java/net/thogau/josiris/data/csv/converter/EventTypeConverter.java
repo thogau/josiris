@@ -7,6 +7,7 @@ import com.opencsv.bean.AbstractBeanField;
 import com.opencsv.exceptions.CsvConstraintViolationException;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 
+import net.thogau.josiris.data.entity.conceptualDomain.EventType;
 import net.thogau.josiris.data.service.ConceptualDomainService;
 
 @Component
@@ -17,7 +18,7 @@ public class EventTypeConverter<T, I> extends AbstractBeanField<T, I> {
 
 	@Override
 	protected Object convert(String value) throws CsvDataTypeMismatchException, CsvConstraintViolationException {
-		return service.getEventType(value);
+		return service.getValue(EventType.class, value);
 	}
 
 }

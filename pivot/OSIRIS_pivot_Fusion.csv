@@ -1,0 +1,7 @@
+Patient_Id,Instance_Id,Analysis_Ref,AlterationOnSample_AlterationType,AlterationOnSample_Pathogenicity,AlterationOnSample_Actionability,AlterationOnSample_ProposedForOrientation,Fusion_Type,Fusion_Chromosome5prime,Fusion_Point5prime,Fusion_Chromosome3prime,Fusion_Point3prime,Fusion_NbSpanningPair,Fusion_NbSplitReads,Fusion_InFrame,Validation_Type,Validation_Method,Validation_Status
+33,452,402,OSIRIS:O15-3,,,,,LOINC:LA21271-4,,LOINC:LA21276-3,,,,,,,
+43,453,403,OSIRIS:O15-3,,,,,LOINC:LA21255-7,,LOINC:LA21266-4,,,,,,,
+59,454,404,OSIRIS:O15-3,,,,,LOINC:LA21269-8,,LOINC:LA21265-6,,,,,,,
+72,455,405,OSIRIS:O15-3,,,,,LOINC:LA21275-5,,LOINC:LA21265-6,,,,,,,
+76,456,406,OSIRIS:O15-3,,,,,LOINC:LA21269-8,,LOINC:LA21265-6,,,,,,,
+90,457,407,OSIRIS:O15-3,,,,,LOINC:LA21271-4,,LOINC:LA21276-3,,,,,,,

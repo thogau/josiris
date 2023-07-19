@@ -7,6 +7,7 @@ import com.opencsv.bean.AbstractBeanField;
 import com.opencsv.exceptions.CsvConstraintViolationException;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 
+import net.thogau.josiris.data.entity.conceptualDomain.Topography;
 import net.thogau.josiris.data.service.ConceptualDomainService;
 
 @Component
@@ -17,8 +18,8 @@ public class TopographyConverter<T, I> extends AbstractBeanField<T, I> {
 
 	@Override
 	protected Object convert(String value) throws CsvDataTypeMismatchException, CsvConstraintViolationException {
-		Object o = service.getTopography("ICDO3:" + value);
-		return o != null ? o : service.getTopography("UMLS:C0439673");
+		Object o = service.getValue(Topography.class, value);
+		return o != null ? o : service.getValue(Topography.class, "UMLS:C0439673");
 	}
 
 }

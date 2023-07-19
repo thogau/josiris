@@ -1,5 +1,6 @@
 package net.thogau.josiris.data.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,9 +27,11 @@ import lombok.Setter;
 import net.thogau.josiris.data.csv.converter.BooleanConverter;
 import net.thogau.josiris.data.csv.converter.DateConverter;
 import net.thogau.josiris.data.csv.converter.SurgeryResectionQualityConverter;
+import net.thogau.josiris.data.csv.converter.TreatmentTypeConverter;
 import net.thogau.josiris.data.entity.conceptualDomain.Boolean;
 import net.thogau.josiris.data.entity.conceptualDomain.Drug;
 import net.thogau.josiris.data.entity.conceptualDomain.SurgeryResectionQuality;
+import net.thogau.josiris.data.entity.conceptualDomain.TreatmentType;
 
 @Entity
 @Table(name = "treatment")
@@ -38,6 +41,39 @@ import net.thogau.josiris.data.entity.conceptualDomain.SurgeryResectionQuality;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Treatment extends AbstractEntity {
+
+	public static final String CSV_HEADER = "Patient_Id,Instance_Id,TumorPathologyEvent_Ref,Treatment_Type,Treatment_LineNumber,Treatment_ActivityCode,Treatment_StartDate,Treatment_EndDate,Treatment_ClinicalTrialContext,Treatment_ClinicalTrialName,Treatment_ClinicalTrialId,Treatment_SurgeryResectionQuality,Treatment_SurgeryNature";
+
+	public String getCsvData() {
+		StringBuffer sb = new StringBuffer();
+		try {
+			sb.append((getTumorPathologyEvent().getPatient().getId() != null
+					? getTumorPathologyEvent().getPatient().getId()
+					: "") + ",");
+		} catch (Exception e) {
+			sb.append((getTumorPathologyEvent().getParent().getPatient().getId() != null
+					? getTumorPathologyEvent().getParent().getPatient().getId()
+					: "") + ",");
+		}
+		sb.append(getId() + ",");
+		sb.append(getTumorPathologyEvent().getId() + ",");
+		sb.append((treatment_Type != null ? treatment_Type.getValueMeaning() : "") + ",");
+		sb.append(treatment_LineNumber + ",");
+		sb.append(treatment_ActivityCode + ",");
+		sb.append((treatment_StartDate != null ? new SimpleDateFormat("yyyy-MM-dd").format(treatment_StartDate) : "")
+				+ ",");
+		sb.append(
+				(treatment_EndDate != null ? new SimpleDateFormat("yyyy-MM-dd").format(treatment_EndDate) : "") + ",");
+		sb.append(
+				(treatment_ClinicalTrialContext != null ? treatment_ClinicalTrialContext.getValueMeaning() : "") + ",");
+		sb.append(treatment_ClinicalTrialName + ",");
+		sb.append(treatment_ClinicalTrialId + ",");
+		sb.append((treatment_SurgeryResectionQuality != null ? treatment_SurgeryResectionQuality.getValueMeaning() : "")
+				+ ",");
+		sb.append(treatment_SurgeryNature);
+
+		return sb.toString();
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "tumorPathologyEvent_id")
@@ -51,6 +87,14 @@ public class Treatment extends AbstractEntity {
 	@Builder.Default
 	@CsvBindByName(column = "TumorPathologyEvent_Ref")
 	String tumorPathologyEvent_Ref = "UMLS:C0439673";
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "treatment_type_id")
+	@CsvBindByName(column = "Treatment_Type")
+	@CsvCustomBindByName(converter = TreatmentTypeConverter.class)
+	@Displayable(label = "Treatment type")
+	TreatmentType treatment_Type;
 
 	@NotEmpty
 	@Builder.Default

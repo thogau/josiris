@@ -38,3 +38,8 @@ vcf-nav-item::part(item):hover {
 .navigation-icon {
 	width: 16px;
 }
+
+.anonymizeCheckbox {
+	position: relative;
+	top: 8px;
+}

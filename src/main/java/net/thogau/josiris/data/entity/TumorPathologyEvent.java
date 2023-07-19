@@ -1,5 +1,6 @@
 package net.thogau.josiris.data.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +43,36 @@ import net.thogau.josiris.data.entity.conceptualDomain.Topography;
 @AllArgsConstructor
 public class TumorPathologyEvent extends AbstractEntity {
 
+	public final static String CSV_HEADER = "Patient_Id,Instance_Id,TumorPathologyEvent_ParentRef,TumorPathologyEvent_Type,TumorPathologyEvent_StartDate,TumorPathologyEvent_PerformanceStatus,TumorPathologyEvent_G8,TumorPathologyEvent_HistologicalGradeType,TumorPathologyEvent_HistologicalGradeValue,TumorPathologyEvent_StadeType,TumorPathologyEvent_StadeValue,TumorPathologyEvent_DiagnosisDate,TumorPathologyEvent_TopographyCode,TumorPathologyEvent_MorphologyCode,TumorPathologyEvent_Laterality";
+
+	public String getCsvData() {
+		StringBuffer sb = new StringBuffer();
+		sb.append((getPatient() != null ? getPatient().getId() : "") + ",");
+		sb.append(getId() + ",");
+		sb.append((getParent() != null ? getParent().getId() : "") + ",");
+		sb.append((tumorPathologyEvent_Type != null ? tumorPathologyEvent_Type.getValueMeaning() : "") + ",");
+		sb.append((tumorPathologyEvent_StartDate != null
+				? new SimpleDateFormat("yyyy-MM-dd").format(tumorPathologyEvent_StartDate)
+				: "") + ",");
+		sb.append(tumorPathologyEvent_PerformanceStatus + ",");
+		sb.append(tumorPathologyEvent_G8 + ",");
+		sb.append(tumorPathologyEvent_HistologicalGradeType + ",");
+		sb.append(tumorPathologyEvent_HistologicalGradeValue + ",");
+		sb.append(tumorPathologyEvent_StadeType + ",");
+		sb.append(tumorPathologyEvent_StadeValue + ",");
+		sb.append((tumorPathologyEvent_DiagnosisDate != null
+				? new SimpleDateFormat("yyyy-MM-dd").format(tumorPathologyEvent_DiagnosisDate)
+				: "") + ",");
+		sb.append(
+				(tumorPathologyEvent_TopographyCode != null ? tumorPathologyEvent_TopographyCode.getValueMeaning() : "")
+						+ ",");
+		sb.append(
+				(tumorPathologyEvent_MorphologyCode != null ? tumorPathologyEvent_MorphologyCode.getValueMeaning() : "")
+						+ ",");
+		sb.append(tumorPathologyEvent_Laterality != null ? tumorPathologyEvent_Laterality.getValueMeaning() : "");
+		return sb.toString();
+	}
+
 	@Transient
 	@CsvBindByName(column = "Patient_Id")
 	String patient_Id;
@@ -54,7 +85,7 @@ public class TumorPathologyEvent extends AbstractEntity {
 	@CsvBindByName(column = "Instance_Id")
 	String instance_Id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "patient_ref")
 	Patient patient;
 
@@ -90,7 +121,7 @@ public class TumorPathologyEvent extends AbstractEntity {
 	@Builder.Default
 	@CsvBindByName(column = "TumorPathologyEvent_G8")
 	@Displayable(label = "G8")
-	String TumorPathologyEvent_G8 = "UMLS:C0439673";
+	String tumorPathologyEvent_G8 = "UMLS:C0439673";
 
 	@NotEmpty
 	@Builder.Default
@@ -119,7 +150,7 @@ public class TumorPathologyEvent extends AbstractEntity {
 	@CsvBindByName(column = "TumorPathologyEvent_DiagnosisDate")
 	@CsvCustomBindByName(converter = DateConverter.class)
 	@Displayable(label = "Diagnosis date")
-	Date TumorPathologyEvent_DiagnosisDate;
+	Date tumorPathologyEvent_DiagnosisDate;
 
 	@NotNull
 	@ManyToOne

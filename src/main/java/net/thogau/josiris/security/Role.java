@@ -1,4 +1,4 @@
-package net.thogau.josiris.data;
+package net.thogau.josiris.security;
 
 public enum Role {
     USER, ADMIN;

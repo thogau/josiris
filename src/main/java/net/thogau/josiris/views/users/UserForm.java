@@ -18,8 +18,8 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.shared.Registration;
 
-import net.thogau.josiris.data.Role;
 import net.thogau.josiris.data.entity.User;
+import net.thogau.josiris.security.Role;
 
 public class UserForm extends FormLayout {
 

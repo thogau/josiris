@@ -18,7 +18,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.thogau.josiris.data.Role;
+import net.thogau.josiris.security.Role;
 
 @Entity
 @Table(name = "application_user")

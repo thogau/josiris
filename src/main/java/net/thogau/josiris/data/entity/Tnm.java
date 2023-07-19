@@ -32,6 +32,30 @@ import net.thogau.josiris.data.entity.conceptualDomain.T;
 @AllArgsConstructor
 public class Tnm extends AbstractEntity {
 
+	public final static String CSV_HEADER = "Patient_Id,Instance_Id,TumorPathologyEvent_Ref,TNM_Version,TNM_Type,TNM_T,TNM_N,TNM_M";
+
+	public String getCsvData() {
+		StringBuffer sb = new StringBuffer();
+		try {
+			sb.append((getTumorPathologyEvent().getPatient().getId() != null
+					? getTumorPathologyEvent().getPatient().getId()
+					: "") + ",");
+		} catch (Exception e) {
+			sb.append((getTumorPathologyEvent().getParent().getPatient().getId() != null
+					? getTumorPathologyEvent().getParent().getPatient().getId()
+					: "") + ",");
+		}
+		sb.append(getId() + ",");
+		sb.append(getTumorPathologyEvent().getId() + ",");
+		sb.append(tnm_Version + ",");
+		sb.append(tnm_Type + ",");
+		sb.append((tnm_T != null ? tnm_T.getValueMeaning() : "") + ",");
+		sb.append((tnm_N != null ? tnm_N.getValueMeaning() : "") + ",");
+		sb.append(tnm_M != null ? tnm_M.getValueMeaning() : "");
+
+		return sb.toString();
+	}
+
 	@OneToOne(mappedBy = "tnm")
 	TumorPathologyEvent tumorPathologyEvent;
 
@@ -66,21 +90,21 @@ public class Tnm extends AbstractEntity {
 
 	@NotEmpty
 	@Builder.Default
-	@CsvBindByName(column = "TNM_TNMVersion")
+	@CsvBindByName(column = "TNM_Version")
 	@Displayable(label = "TNM version")
-	String tnm_TNMVersion = "UMLS:C0439673";
+	String tnm_Version = "UMLS:C0439673";
 
 	@NotEmpty
 	@Builder.Default
-	@CsvBindByName(column = "TNM_G8")
-	@Displayable(label = "TNM G8")
-	String tnm_G8 = "UMLS:C0439673";
+	@CsvBindByName(column = "TNM_Type")
+	@Displayable(label = "TNM Type")
+	String tnm_Type = "UMLS:C0439673";
 
 	@Override
 	public String toString() {
 		return "Tnm [getId()=" + getId() + ", tumorPathologyEvent=" + tumorPathologyEvent + ", tumorPathologyEvent_Ref="
 				+ tumorPathologyEvent_Ref + ", tnm_T=" + tnm_T + ", tmn_N=" + tnm_N + ", tnm_M=" + tnm_M
-				+ ", tnm_TNMVersion=" + tnm_TNMVersion + ", tnm_G8=" + tnm_G8 + "]";
+				+ ", tnm_TNMVersion=" + tnm_Version + ", tnm_G8=" + tnm_Type + "]";
 	}
 
 }

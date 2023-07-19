@@ -46,6 +46,27 @@ import net.thogau.josiris.views.patient.TreeItem;
 @AllArgsConstructor
 public class Patient extends AbstractEntity {
 
+	public final static String CSV_HEADER = "Patient_id,Instance_Id,Patient_Gender,Patient_Ethnicity,Patient_BirthDate,Patient_DeathDate,Patient_ProviderCenterId,Patient_OriginCenterId,Patient_CauseOfDeath,Patient_LastNewsDate,Patient_LastNewsStatus";
+
+	public String getCsvData() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(originalId + ",");
+		sb.append(getId() + ",");
+		sb.append((patient_Gender != null ? patient_Gender.getValueMeaning() : "") + ",");
+		sb.append(patient_Ethnicity + ",");
+		sb.append(
+				(patient_BirthDate != null ? new SimpleDateFormat("yyyy-MM-dd").format(patient_BirthDate) : "") + ",");
+		sb.append(
+				(patient_DeathDate != null ? new SimpleDateFormat("yyyy-MM-dd").format(patient_DeathDate) : "") + ",");
+		sb.append(patient_ProviderCenterId + ",");
+		sb.append(patient_OriginCenterId + ",");
+		sb.append((patient_CauseOfDeath != null ? patient_CauseOfDeath.getValueMeaning() : "") + ",");
+		sb.append((patient_LastNewsDate != null ? new SimpleDateFormat("yyyy-MM-dd").format(patient_LastNewsDate) : "")
+				+ ",");
+		sb.append((patient_LastNewsStatus != null ? patient_LastNewsStatus.getValueMeaning() : ""));
+		return sb.toString();
+	}
+
 	@Transient
 	@CsvBindByName(column = "Patient_Id")
 	String patient_Id;
@@ -223,7 +244,7 @@ public class Patient extends AbstractEntity {
 					var object = field.get(e);
 					if (object != null) {
 						if (object instanceof Date) {
-							value = new SimpleDateFormat("dd/MM/yyyy").format(object);
+							value = new SimpleDateFormat("yyyy-MM-dd").format(object);
 						} else if (object instanceof AbstractConceptualDomain) {
 							value = ((AbstractConceptualDomain) object).getLabelValueMeaning();
 						} else {

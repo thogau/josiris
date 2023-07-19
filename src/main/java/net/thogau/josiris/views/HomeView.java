@@ -3,7 +3,9 @@ package net.thogau.josiris.views;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 
 import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.html.H4;
+import com.vaadin.flow.component.html.ListItem;
+import com.vaadin.flow.component.html.UnorderedList;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
@@ -16,8 +18,10 @@ public class HomeView extends VerticalLayout {
 
 	public HomeView(PatientService service, AutowireCapableBeanFactory beanFactory) {
 		add(new H2("Welcome to Josiris"));
-		add(new Span(
-				"With this tools you can import Osiris pivot files into a relational database and browse the imported patients."));
+		add(new H4("With this tools you can :"));
+		add(new UnorderedList(new ListItem("Import OSIRIS pivot files into a relational database"),
+				new ListItem("Browse the imported patients"),
+				new ListItem("Export the patients into OSIRIS pivot files with anonymizing support")));
 	}
 
 }

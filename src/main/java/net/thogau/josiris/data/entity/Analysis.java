@@ -1,5 +1,6 @@
 package net.thogau.josiris.data.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +36,38 @@ import net.thogau.josiris.data.entity.conceptualDomain.TechnicalProtocol;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Analysis extends AbstractEntity {
+
+	public static final String CSV_HEADER = "Patient_Id,Instance_Id,TumorPathologyEvent_Ref,BiologicalSample_Ref,Analysis_Code,Analysis_Type,Analysis_Date,Technology_TechnicalProtocol,Technology_PlatformName,Technology_PlatformAccession,Technology_DateOfExperiment,Panel_Name,AnalysisProcess_AnalyticPipelineCode,OmicAnalysis_AlgorithmicCellularity,OmicAnalysis_AlgorithmicPloidy,OmicAnalysis_NumberOfBreakPoints";
+
+	public String getCsvData() {
+		StringBuffer sb = new StringBuffer();
+		try {
+			sb.append((getBiologicalSample().getTumorPathologyEvent().getPatient().getId() != null
+					? getBiologicalSample().getTumorPathologyEvent().getPatient().getId()
+					: "") + ",");
+		} catch (Exception e) {
+			sb.append((getBiologicalSample().getTumorPathologyEvent().getParent().getPatient().getId() != null
+					? getBiologicalSample().getTumorPathologyEvent().getParent().getPatient().getId()
+					: "") + ",");
+		}
+		sb.append(getId() + ",");
+		sb.append(getBiologicalSample().getTumorPathologyEvent().getId() + ",");
+		sb.append(getBiologicalSample().getId() + ",");
+		sb.append(analysis_Code + ",");
+		sb.append((analysis_Type != null ? analysis_Type.getValueMeaning() : "") + ",");
+		sb.append((analysis_Date != null ? new SimpleDateFormat("yyyy-MM-dd").format(analysis_Date) : "") + ",");
+		sb.append((technology_TechnicalProtocol != null ? technology_TechnicalProtocol.getValueMeaning() : "") + ",");
+		sb.append((technology_PlatformName != null ? technology_PlatformName : "") + ",");
+		sb.append((technology_PlatformAccession != null ? technology_PlatformAccession : "") + ",");
+		sb.append((technology_DateOfExperiment != null ? technology_DateOfExperiment : "") + ",");
+		sb.append((panel_Name != null ? panel_Name : "") + ",");
+		sb.append((analysisProcess_AnalyticPipelineCode != null ? analysisProcess_AnalyticPipelineCode : "") + ",");
+		sb.append((omicAnalysis_AlgorithmicCellularity != null ? omicAnalysis_AlgorithmicCellularity : "") + ",");
+		sb.append((omicAnalysis_AlgorithmicPloidy != null ? omicAnalysis_AlgorithmicPloidy : "") + ",");
+		sb.append((omicAnalysis_NumberOfBreakPoints != null ? omicAnalysis_NumberOfBreakPoints : ""));
+
+		return sb.toString();
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "biologicalSample_id")
@@ -73,7 +106,7 @@ public class Analysis extends AbstractEntity {
 	@CsvBindByName(column = "Technology_TechnicalProtocol")
 	@CsvCustomBindByName(converter = TechnicalProtocolConverter.class)
 	@Displayable(label = "Technical protocol")
-	TechnicalProtocol Technology_TechnicalProtocol;
+	TechnicalProtocol technology_TechnicalProtocol;
 
 	String technology_PlatformName;
 	String technology_PlatformAccession;
