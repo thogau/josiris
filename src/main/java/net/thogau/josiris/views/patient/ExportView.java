@@ -49,11 +49,6 @@ public class ExportView extends HorizontalLayout {
 	private static int patientCount = 1;
 	private static int drugCount = 1;
 
-	public final static String[] supportedFiles = new String[] { "OSIRIS_pivot_Patient.csv",
-			"OSIRIS_pivot_TumorPathologyEvent.csv", "OSIRIS_pivot_TNM.csv", "OSIRIS_pivot_Treatment.csv",
-			"OSIRIS_pivot_Drug.csv", "OSIRIS_pivot_BiologicalSample.csv", "OSIRIS_pivot_Analysis.csv",
-			"OSIRIS_pivot_Fusion.csv", "OSIRIS_pivot_Annotation.csv" };
-
 	public ExportView(PatientService service, ConceptualDomainService cdService,
 			AutowireCapableBeanFactory beanFactory) {
 		this.service = service;
@@ -76,15 +71,15 @@ public class ExportView extends HorizontalLayout {
 		}
 
 		LoggerFactory.getLogger(getClass().getName()).warn("Exporting patients.");
-		try (FileOutputStream patientFile = new FileOutputStream("export/OSIRIS_pivot_Patient.csv");
-				FileOutputStream tpeFile = new FileOutputStream("export/OSIRIS_pivot_TumorPathologyEvent.csv");
-				FileOutputStream tnmFile = new FileOutputStream("export/OSIRIS_pivot_TNM.csv");
-				FileOutputStream tttFile = new FileOutputStream("export/OSIRIS_pivot_Treatment.csv");
-				FileOutputStream drugFile = new FileOutputStream("export/OSIRIS_pivot_Drug.csv");
-				FileOutputStream sampleFile = new FileOutputStream("export/OSIRIS_pivot_BiologicalSample.csv");
-				FileOutputStream analysisFile = new FileOutputStream("export/OSIRIS_pivot_Analysis.csv");
-				FileOutputStream fusionFile = new FileOutputStream("export/OSIRIS_pivot_Fusion.csv");
-				FileOutputStream annotationFile = new FileOutputStream("export/OSIRIS_pivot_Annotation.csv")) {
+		try (FileOutputStream patientFile = new FileOutputStream("OSIRIS_pivot_Patient.csv");
+				FileOutputStream tpeFile = new FileOutputStream("OSIRIS_pivot_TumorPathologyEvent.csv");
+				FileOutputStream tnmFile = new FileOutputStream("OSIRIS_pivot_TNM.csv");
+				FileOutputStream tttFile = new FileOutputStream("OSIRIS_pivot_Treatment.csv");
+				FileOutputStream drugFile = new FileOutputStream("OSIRIS_pivot_Drug.csv");
+				FileOutputStream sampleFile = new FileOutputStream("OSIRIS_pivot_BiologicalSample.csv");
+				FileOutputStream analysisFile = new FileOutputStream("OSIRIS_pivot_Analysis.csv");
+				FileOutputStream fusionFile = new FileOutputStream("OSIRIS_pivot_Fusion.csv");
+				FileOutputStream annotationFile = new FileOutputStream("OSIRIS_pivot_Annotation.csv")) {
 
 			patientFile.write((Patient.CSV_HEADER + System.getProperty("line.separator")).getBytes());
 			tpeFile.write((TumorPathologyEvent.CSV_HEADER + System.getProperty("line.separator")).getBytes());
