@@ -20,6 +20,7 @@ Java [Osiris](https://github.com/siric-osiris/OSIRIS) pivot files importer.
 - type `java -version` and make sure you are using [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) or later.
 - Run the project typing `./mvnw`.
 - Open http://localhost:8080/josiris in your browser.
+- there is an example set of pivot files that you can import in `pivot` directory.
 
 The project is a standard Maven project. You can import it to Eclipse as you would with any Maven project.
 
