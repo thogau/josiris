@@ -15,10 +15,10 @@ Java [Osiris](https://github.com/siric-osiris/OSIRIS) pivot files importer.
 
 ## Running the Application Locally
 - Open command line.
-- Clone the project on your computer typing `git clone https://github.com/thogau/josiris`.
+- Clone the project on your computer : `git clone https://github.com/thogau/josiris`.
 - Navigate to `josiris` directory.
 - type `java -version` and make sure you are using [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) or later.
-- Run the project typing `./mvnw`.
+- Run the project : `./mvnw`.
 - Open http://localhost:8080/josiris in your browser.
 - An example set of pivot files to import can be found in `pivot` directory.
 
